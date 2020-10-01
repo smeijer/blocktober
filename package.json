@@ -1,10 +1,10 @@
 {
   "name": "blocktober",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "source": "src/index.js",
   "main": "dist/index.js",
-  "bin": "dist/index.js",
+  "bin": "bin/blocktober.js",
   "types": "types/index.d.ts",
   "license": "MIT",
   "author": "Stephan Meijer <stephan@meijer.ws>",
@@ -24,8 +24,9 @@
     "postversion": "git push && git push --tags && npm publish"
   },
   "files": [
-    "docs",
-    "dist"
+    "bin",
+    "dist",
+    "docs"
   ],
   "keywords": [
     "hacktoberfest",
