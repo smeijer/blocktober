@@ -1,11 +1,11 @@
-import meow from 'meow';
-import dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
 import * as api from './api';
 import { LEVELS } from './constants';
 
-const cli = meow(
-  `
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv')({ path: './.env' });
+}
+
+const help = `
     Usage
       $ blocktober {org}/{repo} {level|clear}
  
@@ -23,7 +23,7 @@ const cli = meow(
       $ blocktober smeijer/blocktober contributors
       $ blocktober smeijer/unimported collaborators
       $ blocktober smeijer/blocktober clear
-      $ blocktober smeijer/leaflet-geosearch --clear
+      $ blocktober smeijer/leaflet-geosearch
       
     Level
       users          ${LEVELS[0].description}
@@ -37,26 +37,18 @@ const cli = meow(
       
     Token
       Make sure to store a personal-access-token under GITHUB_TOKEN in your environment keys.
-`,
-  {
-    flags: {
-      clear: { type: 'boolean' },
-    },
-  },
-);
+`;
 
-const {
-  flags,
-  input: [repo, level],
-} = cli;
+const [repo, level] = process.argv.slice(2);
 
 if (!repo || !process.env.GITHUB_TOKEN) {
-  cli.showHelp(1);
+  console.log(help);
+  process.exit(1);
 }
 
 const { limit } = LEVELS.find((x) => x.limit.indexOf(level) > -1) || {};
 
-if (flags.clear || level === 'clear') {
+if (level === 'clear') {
   api.clear(repo);
 } else if (limit) {
   api.limit(repo, limit);
