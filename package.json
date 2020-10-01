@@ -1,0 +1,52 @@
+{
+  "name": "blocktober",
+  "version": "0.0.1",
+  "description": "",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "types": "types/index.d.ts",
+  "license": "MIT",
+  "author": "Stephan Meijer <stephan@meijer.ws>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smeijer/blocktober.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "rimraf ./dist && microbundle -i src/index.js -o dist/index.js --no-pkg-main -f umd --target node",
+    "watch": "rimraf ./dist && microbundle -i src/index.js -o dist/index.js --no-pkg-main -f umd --sourcemap true --compress false --target node --watch --raw",
+    "prettier": "prettier . --write",
+    "bump:patch": "npm version patch -m 'release: cut the %s release'",
+    "bump:minor": "npm version minor -m 'release: cut the %s release'",
+    "bump:major": "npm version major -m 'release: cut the %s release'",
+    "preversion": "npm run test && npm run build",
+    "postversion": "git push && git push --tags && npm publish"
+  },
+  "files": [
+    "docs",
+    "dist"
+  ],
+  "keywords": [
+    "hacktoberfest",
+    "blocktober",
+    "github",
+    "restrictions",
+    "interaction",
+    "limits",
+    "lockdown",
+    "firewall"
+  ],
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "meow": "^7.1.1",
+    "microbundle": "^0.12.4",
+    "node-fetch": "^2.6.1",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2",
+    "rimraf": "^3.0.2"
+  }
+}
